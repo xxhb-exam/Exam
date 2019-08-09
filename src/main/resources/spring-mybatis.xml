@@ -62,7 +62,7 @@
 		<!-- 配置mybaitis的配置文件 -->
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath:com/exam/mapper/*.xml" />	<!-- XML文件 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml" />	<!-- XML文件 -->
 	</bean>
 
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->

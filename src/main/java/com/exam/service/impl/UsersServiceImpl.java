@@ -31,4 +31,9 @@ public class UsersServiceImpl implements UsersService {
 		return usersMapper.deleteByPrimaryKey(userId);
 	}
 
+	@Override
+	public int updateByPrimaryKey(String userId) {
+		return usersMapper.updateByPrimaryKey(userId);
+	}
+
 }

@@ -1,8 +1,4 @@
-		<!--
-        	作者：1487471733@qq.com
-        	时间：2016-12-16
-        	描述：xiehuan
-        -->
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -108,12 +104,12 @@
 		</section>
 	</section>
 	
-	<div id="mmm" style="background: #ccc; border-radius: 10px; opacity:0.5; width: 200px;  right: 0; top: 0; margin-right: 10px; margin-top: 10px;  position: fixed; ">
+	<div id="mmm" style="background: #ccc; border-radius: 10px; opacity:0.5; width: 200px;  left: 0; top: 0; margin-left: 10px; margin-top: 10px;  position: fixed; ">
 		<h1 style="font-size: 48px;text-align: center; margin-top: 10px"><spna id="time">${ExamTime}</spna>分钟</h1>
 	</div>	
 	
 	<div>
-		<a id="testpaperBt" class="link link--highlighted btn btn-success btn-lg" href="#modal" style="opacity:0.8; position: fixed; right: 0; bottom: 0; margin-right: 10px; margin-bottom: 10px">提交试卷</a>
+		<a id="testpaperBt" class="link link--highlighted btn btn-success btn-lg" href="#modal" style="opacity:0.8; position: fixed; left: 0; bottom: 0; margin-left: 0px; margin-bottom: 10px">提交试卷</a>
 		<!-- <button id="testpaper" class="btn btn-success btn-lg">提交试卷</button> -->
 	</div>	
 	
@@ -170,7 +166,7 @@ function submitPapers(arr) {
 				$("#mmm").remove();
 				data.forEach(function(e) {
 					if(e.ifCorrect) {
-						score+=10;
+						score+=5;
 					}
 					$("#score").text(score);
 					inst.open();
@@ -231,5 +227,13 @@ var timeSetInterval = setInterval(function() {
 	
 },1000*60);
 </script>
+    <button class="link link--highlighted btn btn-success btn-lg" id="newback" href="#modal" style="opacity:0.8; position: fixed; right: 0; bottom: 0; margin-right: 10px; margin-bottom: 10px">返回</button>
+        <script>
+    var backUri = document.referrer;
+    $('#back').attr("href",backUri);
+    $('#newback').click(function(){
+        window.location.href=backUri;
+    })
+	</script>
 	</body>
 </html>

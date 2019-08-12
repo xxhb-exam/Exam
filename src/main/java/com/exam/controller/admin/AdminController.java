@@ -48,9 +48,9 @@ public class AdminController {
 	public String loginJson(HttpSession session, Users users) {
 		String sessionCode = (String) session.getAttribute("code");// session中验证码
 		String code = users.getCode();// 用户code
-		if (!sessionCode.equals(code)) {// 验证码错误返回提示信息
-			return "0";
-		}
+		/*
+		 * if (!sessionCode.equals(code)) {// 验证码错误返回提示信息 return "0"; }
+		 */
 
 		Users user = adminMapper.findByUser(users);
 		if (user != null) {

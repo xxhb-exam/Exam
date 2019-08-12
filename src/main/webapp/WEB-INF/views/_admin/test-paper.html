@@ -180,7 +180,9 @@
 		    	 },
 		    	 addTestPaperModel: function() {
 		    		 ajaxSubmit("/admin/addtestpaper", $("#defaultForm").serialize(),
+
 		    			function(data) {
+							alert(data)
 		    			 	if(data) {
 		    			 		toastr.success('操作成功!', "新增试卷");
 		    			 		getAllTestPaper();

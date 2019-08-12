@@ -62,10 +62,10 @@ public class QuestionBankController {
 		
 		return addQuestionBank;
 	}
-	
+
 	/**
 	 * 删除试卷
-	 * @param questionBankId
+	 * @param questionBankVo
 	 * @return
 	 */
 	@ResponseBody
@@ -85,5 +85,7 @@ public class QuestionBankController {
 		
 		return updateQuestionBank;
 	}
-	
+
+
+
 }

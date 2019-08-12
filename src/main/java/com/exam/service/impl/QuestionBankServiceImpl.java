@@ -43,10 +43,11 @@ public class QuestionBankServiceImpl implements QuestionBankService {
 		//设置提状态
 		questionBankVo.setState(1);//设置数据有效
 		int questionBankState = questionBankMapper.addQuestionBank(questionBankVo);
-		if (questionBankVo.getTestsType() == 0) {
+		if (questionBankVo.getTestsType() == 0 || questionBankVo.getTestsType() == 2  ) {
 			if (questionBankState >= 1) {
 				return true;
 			}
+
 		}
 		
 		for (Options op : questionBankVo.getOptions()) {

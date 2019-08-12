@@ -7,8 +7,6 @@ import com.exam.entity.Users;
 public interface UsersMapper {
     int deleteByPrimaryKey(String userId);
 
-    int updateByPrimaryKey(String userId);
-
     int insert(Users record);
 
     int insertSelective(Users record);

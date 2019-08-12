@@ -66,17 +66,16 @@
 							</tr>
 						</thead>
 						<tbody>
-						<list allUsers as allUsers>
+						<#list allUsers as allUsers>
 							<tr id="${allUsers.userId}">
 								<td>${allUsers.userId!}</td>
 								<td>${allUsers.userName}</td>
 								<td><#if allUsers.permission==1><span>管理员</span><#elseif allUsers.permission==0><span>用户</span></#if></td>
 								<td>
 									<a class="btn btn-xs" onclick="delete1(${allUsers.userId})">删除</a>
-									<a class="btn btn-xs" onclick="update1(${allUsers.userId})">修改</a>
 								</td>
 							</tr>
-							</list>
+							</#list>
 						</tbody>
 					</table>
 					</div>
@@ -102,7 +101,7 @@
        var a = EditableTable.init();
    });
 
-
+   
     function delete1(userId){
         if (confirm("是否要删除这位考生 ?") == false) {
             return;
@@ -121,12 +120,6 @@
                } 
            });
 
-    }
-
-    function update1(userId) {
-        $.ajax({
-
-        })
     }
     </script>
 </body>

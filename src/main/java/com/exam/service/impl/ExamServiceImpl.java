@@ -63,6 +63,11 @@ public class ExamServiceImpl implements ExamService {
 			session.setAttribute(questionBankVo.getQuestionBankId().toString(), questionBankVo.getAnswer());
 		}
 
+		List<QuestionBankVo> findAllFillsBlanksQuestion = examMapper.findAllFillsBlanksQuestion(Integer.parseInt(id));// 填空题
+		for (QuestionBankVo questionBankVo : findAllFillsBlanksQuestion) {
+			session.setAttribute(questionBankVo.getQuestionBankId().toString(), questionBankVo.getAnswer());
+		}
+
 		Times times = new Times();// 当前试卷-当前用户的试卷如果没时间设置时间
 		times.setUserId(users.getUserId());
 		times.setTestpaperId(Integer.parseInt(id));
@@ -77,6 +82,7 @@ public class ExamServiceImpl implements ExamService {
 
 		modelAndView.addObject("JudgmentQuestion", findAllJudgmentQuestion);
 		modelAndView.addObject("ChoiceQuestion", findAllChoiceQuestion);
+		modelAndView.addObject("findAllFillsBlanksQuestion", findAllFillsBlanksQuestion);
 		modelAndView.setViewName("_exam/exam");
 	}
 

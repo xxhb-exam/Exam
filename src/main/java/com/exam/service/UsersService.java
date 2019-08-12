@@ -13,6 +13,4 @@ public interface UsersService {
     //删除用户信息
    int deleteByPrimaryKey(String userId);
 
-   //修改用户信息
-    int updateByPrimaryKey(String userId);
 }

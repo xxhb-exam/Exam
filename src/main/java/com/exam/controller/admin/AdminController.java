@@ -1,5 +1,6 @@
 package com.exam.controller.admin;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +46,12 @@ public class AdminController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginJson(HttpSession session, Users users) {
-		String sessionCode = (String) session.getAttribute("code");// session中验证码
+	public String loginJson(HttpSession session, HttpServletRequest request, Users users) {
+		String sessionCode = (String) request.getAttribute("code");// session中验证码
 		String code = users.getCode();// 用户code
-/*
-		if (!sessionCode.equals(code)) {// 验证码错误返回提示信息
+		/*if (!sessionCode.equals(code)) {// 验证码错误返回提示信息
 			return "0";
-		}
-*/
+		}*/
 
 		Users user = adminMapper.findByUser(users);
 		if (user != null) {

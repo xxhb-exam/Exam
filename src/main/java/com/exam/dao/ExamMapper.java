@@ -32,4 +32,6 @@ public interface ExamMapper {
 	// 更新当前数据时间-1分钟
 	public Integer updateExamTimes(Times times);
 
+	// 查询所有填空题
+	public List<QuestionBankVo> findAllFillsBlanksQuestion(Integer id);
 }

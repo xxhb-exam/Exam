@@ -13,7 +13,11 @@
     testpaper_id, testpaper_name, testpaper_state, start_date, end_date
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+<<<<<<< HEAD
     select
+=======
+    select 
+>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420
     <include refid="Base_Column_List" />
     from testpaper
     where testpaper_id = #{testpaperId,jdbcType=INTEGER}
@@ -23,20 +27,35 @@
     where testpaper_id = #{testpaperId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.exam.entity.TestPaper">
+<<<<<<< HEAD
 
     <selectKey keyProperty="testpaperId" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
+<<<<<<<< HEAD:src/main/resources/mapper/TestPaperMapper.xml
     insert into testpaper (testpaper_id, testpaper_name, testpaper_state,
     start_date, end_date)
     values (#{testpaperId,jdbcType=INTEGER}, #{testpaperName,jdbcType=VARCHAR}, #{testpaperState,jdbcType=INTEGER},
     #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP})
+========
+=======
+>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420
+    insert into testpaper (testpaper_id, testpaper_name, testpaper_state, 
+      start_date, end_date)
+    values (#{testpaperId,jdbcType=INTEGER}, #{testpaperName,jdbcType=VARCHAR}, #{testpaperState,jdbcType=INTEGER}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP})
+<<<<<<< HEAD
+>>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420:src/main/java/com/exam/mapper/TestPaperMapper.xml
   </insert>
   <insert id="insertSelective" parameterType="com.exam.entity.TestPaper">
 
     <selectKey keyProperty="testpaperId" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
+=======
+  </insert>
+  <insert id="insertSelective" parameterType="com.exam.entity.TestPaper">
+>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420
     insert into testpaper
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="testpaperId != null">
@@ -99,11 +118,19 @@
       end_date = #{endDate,jdbcType=TIMESTAMP}
     where testpaper_id = #{testpaperId,jdbcType=INTEGER}
   </update>
+<<<<<<< HEAD
 
 
   <!-- 与系统分隔 -->
   <!-- 查询所有有效试卷 -->
 
+=======
+  
+  
+  <!-- 与系统分隔 -->
+  <!-- 查询所有有效试卷 -->
+  
+>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420
   <select id="findTestPaperInfo" resultMap="BaseResultMap">
 	  SELECT
 		*
@@ -112,7 +139,11 @@
 	WHERE
 		testpaper.testpaper_state = 1
   </select>
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420
   <!-- 更新书卷状态  即前端页面执行的删除试卷操作 -->
   <update id="updateTestPaperState" parameterType="java.lang.Integer">
 		  UPDATE testpaper
@@ -120,7 +151,11 @@
 		WHERE
 			testpaper.testpaper_id = #{id,jdbcType=INTEGER}
   </update>
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420
   <update id="updateTestPaperInfo" parameterType="com.exam.entity.TestPaper">
 		  	UPDATE testpaper
 		SET testpaper.testpaper_name =#{testpaperName,jdbcType=VARCHAR},
@@ -130,5 +165,9 @@
 			testpaper.testpaper_id =#{testpaperId,jdbcType=INTEGER}
   
   </update>
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420
 </mapper>

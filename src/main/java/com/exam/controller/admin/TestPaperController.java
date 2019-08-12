@@ -127,6 +127,7 @@ public class TestPaperController {
 		List<QuestionBankVo> findAllQuestionBank = questionBankMapper.findAllQuestionBank();
 		List<TestPaperTestsVo> selectIdTestPaperQuesion=testPaperTestService.findSelectTestPaperQuesion(Integer.parseInt(testpaperId));
 		ModelAndView modelAndView = new ModelAndView();
+<<<<<<< HEAD
 		modelAndView.addObject("findAllQuestionBank", findAllQuestionBank);
 		modelAndView.addObject("selectIdTestPaperQuesion", selectIdTestPaperQuesion);
 		modelAndView.setViewName("_admin/editItemList");
@@ -151,6 +152,32 @@ public class TestPaperController {
 	@ResponseBody
 	@RequestMapping(value = "/addtestpaper")
 	public String  addTestPaper(TestPaper testPaper) {
+=======
+    	modelAndView.addObject("findAllQuestionBank", findAllQuestionBank);
+    	modelAndView.addObject("selectIdTestPaperQuesion", selectIdTestPaperQuesion);
+    	modelAndView.setViewName("_admin/editItemList");   	
+    	return modelAndView;
+    }
+    
+    //修改试卷试题
+    @RequestMapping(value="/editTestPaperQuestion")
+    @ResponseBody
+    public String editTestPaperQuestion(@RequestBody TestPaperTestsList testPaperTestsList,HttpServletRequest request,HttpServletResponse response){
+    	int j=testPaperTestService.deleteTestPaperTestById(testPaperTestsList.getTestpaperId());
+    	int addTestPaperQuestion = testPaperTestService.addTestPaperQuestion(testPaperTestsList);
+    	System.out.println(addTestPaperQuestion);
+    	if(addTestPaperQuestion>=1){
+    		return "1";
+    	}else{
+    		return "0";
+    	}
+    	
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/addtestpaper")
+    public String  addTestPaper(TestPaper testPaper) {
+>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420
     	/*testPaper.setTestpaperState(1);
     	int insertSelective = testPaperController.insertSelective(testPaper);
     	if (insertSelective>=1) {
@@ -159,6 +186,7 @@ public class TestPaperController {
     	return false;*/
 		return randomPaper(testPaper);
 
+<<<<<<< HEAD
 	}
 
 	/**
@@ -203,6 +231,59 @@ public class TestPaperController {
 			questionBankId.add(questionBankVo.getQuestionBankId());
 		}
 
+=======
+    }
+
+	/**
+	 * 随机生成一份试卷
+	 * @param testPaper
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/randomPaper")
+	public String  randomPaper(TestPaper testPaper) {
+		testPaper.setTestpaperState(1);
+		int insertSelective = testPaperController.insertSelective(testPaper);
+
+		List<TestPaper> testPaperList = testPaperController.findTestPaperInfo();
+
+		List<QuestionBankVo> questionList = testPaperService.findAllQuestionBank();
+		//创建一个选择题list
+		List<QuestionBankVo> chooseQuestionList = new ArrayList<QuestionBankVo>();
+		//创建一个判断题list
+		List<QuestionBankVo> judgeQuestionList = new ArrayList<QuestionBankVo>();
+		//创建一个填空题题list
+		List<QuestionBankVo> FillsBlanksQuestionList = new ArrayList<QuestionBankVo>();
+		//把选择题和判断题分类存放
+		for (int i = 0; i < questionList.size() ; i++) {
+			int k = questionList.get(i).getTestsType();
+			if(k==0){
+				judgeQuestionList.add(questionList.get(i));
+			}else if(k==1){
+				chooseQuestionList.add(questionList.get(i));
+			}else {
+				FillsBlanksQuestionList.add(questionList.get(i));
+			}
+		}
+		//随机抽取不同的数量的选择和判断题
+		List<QuestionBankVo> randomChooseQuestionList = RandomQuestion.getSubStringByRadom(chooseQuestionList,20);
+		List<QuestionBankVo> randomJudgeQuestionList = RandomQuestion.getSubStringByRadom(judgeQuestionList,10);
+		List<QuestionBankVo> randomFillsBlanksQuestionList = RandomQuestion.getSubStringByRadom(FillsBlanksQuestionList,5);
+		//创建一个存放试卷试题id的list,并把试卷试题id存到list里面
+		List<Integer> questionBankId  = new ArrayList<>();
+		for (QuestionBankVo questionBankVo :randomChooseQuestionList) {
+			questionBankId.add(questionBankVo.getQuestionBankId());
+		}
+
+		for (QuestionBankVo questionBankVo :randomJudgeQuestionList) {
+			questionBankId.add(questionBankVo.getQuestionBankId());
+		}
+
+		for (QuestionBankVo questionBankVo :randomFillsBlanksQuestionList) {
+			questionBankId.add(questionBankVo.getQuestionBankId());
+		}
+
+>>>>>>> dad74cbc294f1df691c77c38da49fec194d9f420
 		TestPaperTestsList testPaperTestsList = new TestPaperTestsList();
 
 		testPaperTestsList.setQuestionBankId(questionBankId);

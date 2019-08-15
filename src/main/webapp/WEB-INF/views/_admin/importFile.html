@@ -12,27 +12,27 @@
 </head>
 
 <body>
-<form enctype="multipart/form-data" id="batchUpload"  action="/admin/upload" method="post" class="form-horizontal">
-    <button class="btn btn-success btn-xs" id="uploadEventBtn" style="height:26px;"  type="button" >选择文件</button>  
-    <input type="file" name="file"  style="width:0px;height:0px;" id="uploadEventFile">  
-    <input id="uploadEventPath"  disabled="disabled"  type="text" placeholder="请选择excel表" style="border: 1px solid #e6e6e6; height: 26px;width: 200px;" >
-</form>
-<!--<button type="button" class="btn btn-success btn-sm"  οnclick="user.uploadBtn()" >上传</button>-->
-<button type="button" class="btn btn-success btn-sm"  id = "uploadBtnTest" οnclick="uploadBtn()" >上传</button>
-<!--<a id="back" href="#">返回</a>-->
-<button class="btn btn-success btn-sm" id="newback">返回</button>
+<div class="modal-header bg-primary">
+    <button class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">上传文件</h4>
+</div>
+<div class="modal-body" style="height: 80px">
+    <form enctype="multipart/form-data" id="batchUpload"  action="/admin/upload" method="post" class="form-horizontal">
+        <div style="width: 100px;float: left;"> <button class="btn btn-success btn-sm" id="uploadEventBtn" type="button"  >选择文件</button></div>
+        <div style="width: 0px;float: left"><input type="file" name="file"  style="width: 0px;height: 20px" id="uploadEventFile"></div>
+        <div style="width: 255px;float: left;"><input id="uploadEventPath"  disabled="disabled"  type="text" placeholder="请选择excel表" style="border: 1px solid #e6e6e6; height: 30px;width: 250px" >
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+    <button type="button" class="btn btn-primary btn-sm"  id = "uploadBtnTest" onclick="uploadBtn()" >确定</button>
+</div>
 
+</div>
 
 </body>
 
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-<script>
-    var backUri = document.referrer;
-    /*$('#back').attr("href",backUri);*/
-    $('#newback').click(function(){
-        window.location.href=backUri;
-    })
-</script>
 <script charset="utf-8" type="text/javascript" language="javascript">
     var User = function(){
         this.init = function(){
@@ -74,9 +74,9 @@
             alert("只能上传Excel文件");
         }else{
             var url =  '/admin/upload/';
-            var formData = new FormData($('form')[0]);
-            console.log(formData);
-            user.sendAjaxRequest(url,'POST',formData);
+            var formdata = new FormData();
+            formdata.append("file", $('#uploadEventFile')[0].files[0]);
+            user.sendAjaxRequest(url,'POST',formdata);
         }
     });
 

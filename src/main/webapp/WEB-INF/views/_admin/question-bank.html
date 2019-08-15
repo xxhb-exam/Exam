@@ -46,13 +46,13 @@
 		</ul>
 	</div>
 	<div class="col-xs-10 col-xs-offset-2 content" id="content">
-		<!--content-->
+		<!--content v-on:click="Importexcel() data-target="#excel-modal""-->
 
 		<div class="panel panel-primary box pad" >
 			<div class="panel-heading">
 				<h2 class="panel-title pull-left" style="line-height: 39px;">题库</h2>
 				<button class="pull-right btn btn-primary" data-toggle="modal" v-on:click="add()">新增题</button>
-                <button class="pull-right btn btn-primary" data-toggle="modal" onclick="go_excel()">导入</button>
+				<button class="pull-right btn btn-primary" data-toggle="modal" onclick=" Importexcel()" >导入</button>
 				<!--<form name="user" action="/admin/excel_go" method="get">
 					<input type="submit" value="导入" />
 				</form>-->
@@ -191,6 +191,17 @@
 	<!--content-->
 </div>
 
+<!--对话框-->
+<div class="modal fade bs-example-modal-lg" id="excel-modal" data-remote="importFile.html">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		</div>
+
+	</div>
+</div>
+
+
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -200,8 +211,15 @@
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script>
 
-	function go_excel(){
+	/*function go_excel(){
 		window.location.href="importFile.html";
+	}*/
+
+	function Importexcel(){
+		$('#excel-modal').modal({
+			backdrop: 'static',
+			keyboard: false
+		});
 	}
 
 	$(function() {

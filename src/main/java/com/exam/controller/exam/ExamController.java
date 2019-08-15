@@ -2,6 +2,7 @@ package com.exam.controller.exam;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.exam.controller.admin.TestPaperController;
 import com.exam.dao.TestPaperMapper;
+import com.exam.entity.Users;
 import com.exam.service.TestPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,7 +61,11 @@ public class ExamController {
 		ModelAndView modelAndView = new ModelAndView();
 		/*Date date = new Date();*/
 		TestPaper testPaper = new TestPaper();
-		testPaper.setTestpaperName(session.getAttribute("userId")+"");
+		//获取用户对象
+		Users users = (Users) session.getAttribute("myUser");
+		Date date = new Date();
+		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyyMMddHHmmss");
+		testPaper.setTestpaperName(users.getUserName()+dateFormat.format(date));
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		testPaper.setStartDate(	simpleDateFormat.format(System.currentTimeMillis()));
 		testPaper.setEndDate(simpleDateFormat.format(System.currentTimeMillis() + 60*60*1000));

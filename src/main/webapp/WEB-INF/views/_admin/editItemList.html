@@ -47,7 +47,7 @@
 					   <#list findAllQuestionBank as findAllQuestionBank>
 							<div class="form-group">
 							<input name="questionBankId" id="${findAllQuestionBank.testsType}" type="checkbox" value="${findAllQuestionBank.questionBankId}"/>
-							<span><#if findAllQuestionBank.testsType==1>选择题<#elseif findAllQuestionBank.testsType==0>判断题</#if>：</span>
+							<span><#if findAllQuestionBank.testsType==1>选择题<#elseif findAllQuestionBank.testsType==0>判断题<#elseif findAllQuestionBank.testsType==2>填空题</#if>：</span>
 							<span>第${findAllQuestionBank.questionBankId}题</span>
 							<span style="margin-left: 20px;">${findAllQuestionBank.stem}</span>
 							</div>
@@ -119,6 +119,7 @@
   			var len = $("input:checkbox:checked").size();
   			var len2 = $("input[id='1']:checkbox:checked").size();
   			var len3 = $("input[id='0']:checkbox:checked").size();
+			var len4 = $("input[id='2']:checkbox:checked").size();
   			var temp = $("#formid").serialize();
   					
   			
@@ -126,12 +127,13 @@
   			
   			var json = JSON.stringify(t);
   			
-  			if(len==10&&len2==5&&len3==5){
+  			if(len==25&&len2==15&&len3==5&&len4==5){
   				ajaxSubmitJSON("/admin/editTestPaperQuestion",
   						json,
   	  					function(data) {
   	  						if(data == true) {
   	  							toastr.success('修改成功!', '设置');
+								setTimeout(function(){window.location.href="/admin/testPaper.html"},2000);
   	  						}
   	  					},
   	  					function(data) {
@@ -139,7 +141,7 @@
   	  					}
   	  				);
   			}else{
-					alert("请选择五道判断，五道选择，现在一共选择了"+len+"道,其中"+len2+"道选择，"+len3+"道判断");
+					alert("请选择五道判断，十五道选择，五到填空题现在一共选择了"+len+"道,其中"+len2+"道选择，"+len3+"道判断，"+len4+"填空题");
   			}
   			
   		}

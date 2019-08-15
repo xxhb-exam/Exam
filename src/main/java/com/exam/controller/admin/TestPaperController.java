@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.exam.util.RandomQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,13 +152,13 @@ public class TestPaperController {
     @ResponseBody
     @RequestMapping(value = "/addtestpaper")
     public String  addTestPaper(TestPaper testPaper) {
-    	/*testPaper.setTestpaperState(1);
+    	testPaper.setTestpaperState(1);
     	int insertSelective = testPaperController.insertSelective(testPaper);
     	if (insertSelective>=1) {
-			return true;
+			return "1";
 		}
-    	return false;*/
-		return randomPaper(testPaper);
+    	return "0";
+		//return randomPaper(testPaper);
 
     }
 
@@ -193,8 +194,8 @@ public class TestPaperController {
 			}
 		}
 		//随机抽取不同的数量的选择和判断题
-		List<QuestionBankVo> randomChooseQuestionList = RandomQuestion.getSubStringByRadom(chooseQuestionList,20);
-		List<QuestionBankVo> randomJudgeQuestionList = RandomQuestion.getSubStringByRadom(judgeQuestionList,10);
+		List<QuestionBankVo> randomChooseQuestionList = RandomQuestion.getSubStringByRadom(chooseQuestionList,15);
+		List<QuestionBankVo> randomJudgeQuestionList = RandomQuestion.getSubStringByRadom(judgeQuestionList,5);
 		List<QuestionBankVo> randomFillsBlanksQuestionList = RandomQuestion.getSubStringByRadom(FillsBlanksQuestionList,5);
 		//创建一个存放试卷试题id的list,并把试卷试题id存到list里面
 		List<Integer> questionBankId  = new ArrayList<>();

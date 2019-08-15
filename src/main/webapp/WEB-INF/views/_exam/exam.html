@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,25 +60,44 @@
 			卷一
 		</div>
 	</section>
-	<!--判断题-->
-	<section class="panduan">
-		<h1>判断题</h1>
-		<#list JudgmentQuestion as item>
-		<div >
+	<!--填空题-->
+	<section class="panduan ">
+		<h1>填空题</h1>
+		<#list findAllFillsBlanksQuestion as item>
+		<div class="col-xs-12">
 			<h2>第 ${item_index+1} 题</h2>
 			<article id="fontsize">
 				${item.stem}
 			</article>
-			<div style="width: 100%;height: 100px;">
-				<ul>
-					<li><input type="radio" id="${item.questionBankId}" name="${item.questionBankId}" value="1"><label>对</label></li>
-					<li><input type="radio" id="${item.questionBankId}" name="${item.questionBankId}" value="0"><label>错</label></li>
-				</ul>
+			<div>
+
+				<input style="border:0px;background:rgba(0, 0, 0, 0); width: 300px; font-size: 25px; padding-top: 0px; " type="text" name="${item.questionBankId}" placeholder="请输入答案"  >
 			</div>
-			<div class="alert alert-success text-center hidden success-${item.questionBankId}">正确</div>
-			<div class="alert alert-danger text-center hidden danger-${item.questionBankId}">错误&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;答案:<span>对</span></div>
 		</div>
+		<div class="clearfix"></div>
+		<div class="alert alert-success text-center hidden success-${item.questionBankId}">正确</div>
+		<div class="alert alert-danger text-center hidden danger-${item.questionBankId}">错误&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;答案:<span>对</span></div>
 	</#list>
+</section>
+<!--判断题-->
+<section class="panduan">
+	<h1>判断题</h1>
+	<#list JudgmentQuestion as item>
+	<div >
+		<h2>第 ${item_index+1} 题</h2>
+		<article id="fontsize">
+			${item.stem}
+		</article>
+		<div style="width: 100%;height: 100px;">
+			<ul>
+				<li><input type="radio" id="${item.questionBankId}" name="${item.questionBankId}" value="1"><label>对</label></li>
+				<li><input type="radio" id="${item.questionBankId}" name="${item.questionBankId}" value="0"><label>错</label></li>
+			</ul>
+		</div>
+		<div class="alert alert-success text-center hidden success-${item.questionBankId}">正确</div>
+		<div class="alert alert-danger text-center hidden danger-${item.questionBankId}">错误&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;答案:<span>对</span></div>
+	</div>
+</#list>
 
 </section>
 <!--选择题-->
@@ -104,12 +122,12 @@
 </section>
 </section>
 
-<div id="mmm" style="background: #ccc; border-radius: 10px; opacity:0.5; width: 200px;  left: 0; top: 0; margin-left: 10px; margin-top: 10px;  position: fixed; ">
+<div id="mmm" style="background: #ccc; border-radius: 10px; opacity:0.5; width: 200px;  right: 0; top: 0; margin-right: 10px; margin-top: 10px;  position: fixed; ">
 	<h1 style="font-size: 48px;text-align: center; margin-top: 10px"><spna id="time">${ExamTime}</spna>分钟</h1>
 </div>
 
 <div>
-	<a id="testpaperBt" class="link link--highlighted btn btn-success btn-lg" href="#modal" style="opacity:0.8; position: fixed; left: 0; bottom: 0; margin-left: 0px; margin-bottom: 10px">提交试卷</a>
+	<a id="testpaperBt" class="link link--highlighted btn btn-success btn-lg" href="#modal" style="opacity:0.8; position: fixed; right: 0; bottom: 0; margin-right: 10px; margin-bottom: 10px">提交试卷</a>
 	<!-- <button id="testpaper" class="btn btn-success btn-lg">提交试卷</button> -->
 </div>
 
@@ -144,96 +162,95 @@
 <script type="text/javascript" src="/static/js/common.js"></script>
 
 <script>
-    $(document).ready(function(){
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square',
-            radioClass: 'iradio_square',
-            increaseArea: '20%' // optional
-        });
-    });
+	$(document).ready(function(){
+		$('input').iCheck({
+			checkboxClass: 'icheckbox_square',
+			radioClass: 'iradio_square',
+			increaseArea: '20%' // optional
+		});
+	});
 
-    var inst = $('[data-remodal-id=modal-score]').remodal();
+	var inst = $('[data-remodal-id=modal-score]').remodal();
 
-    history.pushState(null, null, document.URL);
-    window.addEventListener('popstate', function () {
-        history.pushState(null, null, document.URL);
-    });
+	history.pushState(null, null, document.URL);
+	window.addEventListener('popstate', function () {
+		history.pushState(null, null, document.URL);
+	});
 
-    function submitPapers(arr) {
-        ajaxSubmitJSON("/exam/submitpapers", JSON.stringify(arr),
-            function(data) {
-                var score = 0;
-                $("#mmm").remove();
-                data.forEach(function(e) {
-                    if(e.ifCorrect) {
-                        score+=5;
-                    }
-                    $("#score").text(score);
-                    inst.open();
-                    console.log(e);
-                    if(e.ifCorrect) {
-                        $(".success-"+e.questionBankId).removeClass("hidden");
-                    } else {
-                        $(".danger-"+e.questionBankId).removeClass("hidden");
-                        if(e.answer == 0) {
-                            e.answer = "错";
-                        }
-                        if(e.answer == 1) {
-                            e.answer = "对";
-                        }
-                        $(".danger-"+e.questionBankId+" span").text(e.answer);
-                    }
-                })
+	function submitPapers(arr) {
+		ajaxSubmitJSON("/exam/submitpapers", JSON.stringify(arr),
+				function(data) {
+					var score = 0;
+					$("#mmm").remove();
+					data.forEach(function(e) {
+						if(e.ifCorrect) {
+							score+=10;
+						}
+						$("#score").text(score);
+						inst.open();
+						console.log(e);
+						if(e.ifCorrect) {
+							$(".success-"+e.questionBankId).removeClass("hidden");
+						} else {
+							$(".danger-"+e.questionBankId).removeClass("hidden");
+							if(e.answer == 0) {
+								e.answer = "错";
+							}
+							if(e.answer == 1) {
+								e.answer = "对";
+							}
+							$(".danger-"+e.questionBankId+" span").text(e.answer);
+						}
+					})
 
-            },
-            function(data) {
-                alert("错误");
-            }
-        );
-    }
+				},
+				function(data) {
+					alert("错误");
+				}
+		);
+	}
 
-    var arr = [];
-    $("#testpaper").on("click", function(){
-    <#list JudgmentQuestion as item>
-        var item${item.questionBankId} = $('input[name="${item.questionBankId}"]:checked ');
-        arr.push({
-            'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
-            'answer': item${item.questionBankId}.val()
-    });
-    </#list>
-        <#list ChoiceQuestion as item>
-        var item${item.questionBankId} = $('input[name="${item.questionBankId}"]:checked ');
-        arr.push({
-            'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
-            'answer': item${item.questionBankId}.val()
-    });
-    </#list>
-        console.log(arr);
-        console.log(JSON.stringify({"list":arr}));
-        $("#testpaperBt").remove();
-        submitPapers(arr);
-        clearInterval(timeSetInterval);
-    });
+	var arr = [];
+	$("#testpaper").on("click", function(){
+	<#list JudgmentQuestion as item>
+		var item${item.questionBankId} = $('input[name="${item.questionBankId}"]:checked ');
+		arr.push({
+			'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
+			'answer': item${item.questionBankId}.val()
+	});
+	</#list>
+		<#list ChoiceQuestion as item>
+		var item${item.questionBankId} = $('input[name="${item.questionBankId}"]:checked ');
+		arr.push({
+			'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
+			'answer': item${item.questionBankId}.val()
+	});
+	</#list>
+		<#list findAllFillsBlanksQuestion as item>
+		var item${item.questionBankId} = $('input[name="${item.questionBankId}"] ');
+		arr.push({
+			'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
+			'answer': item${item.questionBankId}.val()
+	});
+	</#list>
+		console.log(arr);
+		console.log(JSON.stringify({"list":arr}));
+		$("#testpaperBt").remove();
+		submitPapers(arr);
+		clearInterval(timeSetInterval);
+	});
 
-    var timeSetInterval = setInterval(function() {
-        var time = $("#time").text();
-        time--;
-        $("#time").text(time);
-        if(time==0) {
-            $("#testpaperBt").remove();
-            submitPapers(arr);
-            clearInterval(timeSetInterval);
-        }
+	var timeSetInterval = setInterval(function() {
+		var time = $("#time").text();
+		time--;
+		$("#time").text(time);
+		if(time==0) {
+			$("#testpaperBt").remove();
+			submitPapers(arr);
+			clearInterval(timeSetInterval);
+		}
 
-    },1000*60);
-</script>
-<button class="link link--highlighted btn btn-success btn-lg" id="newback" href="#modal" style="opacity:0.8; position: fixed; right: 0; bottom: 0; margin-right: 10px; margin-bottom: 10px">返回</button>
-<script>
-    var backUri = document.referrer;
-    $('#back').attr("href",backUri);
-    $('#newback').click(function(){
-        window.location.href=backUri;
-    })
+	},1000*60);
 </script>
 </body>
 </html>

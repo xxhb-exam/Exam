@@ -19,7 +19,7 @@ import com.exam.entity.Users;
  * 登陆功能
  */
 @Controller
-public class AdminController {
+public class  AdminController {
 
 	@Autowired
 	private AdminMapper adminMapper;

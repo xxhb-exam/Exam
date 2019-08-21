@@ -17,31 +17,24 @@
     <h4 class="modal-title">上传文件</h4>
 </div>
 <div class="modal-body" style="height: 80px">
-    <form enctype="multipart/form-data" id="batchUpload"  action="/admin/upload" method="post" class="form-horizontal">
-        <div style="width: 100px;float: left;"> <button class="btn btn-success btn-sm" id="uploadEventBtn" type="button"  >选择文件</button></div>
-        <div style="width: 0px;float: left"><input type="file" name="file"  style="width: 0px;height: 20px" id="uploadEventFile"></div>
-        <div style="width: 255px;float: left;"><input id="uploadEventPath"  disabled="disabled"  type="text" placeholder="请选择excel表" style="border: 1px solid #e6e6e6; height: 30px;width: 250px" >
+    <form enctype="multipart/form-data" id="batchUpload" action="/admin/upload" method="post" class="form-horizontal">
+        <div style="width: 100px;float: left;">
+            <button class="btn btn-success btn-sm" id="uploadEventBtn" type="button">选择文件</button>
         </div>
-<<<<<<< HEAD
-=======
-
-
->>>>>>> bf572048b947a98883064228679e7352fa7c37b2
+        <div style="width: 0px;float: left"><input type="file" name="file" style="width: 0px;height: 20px"
+                                                   id="uploadEventFile"></div>
+        <div style="width: 255px;float: left;"><input id="uploadEventPath" disabled="disabled" type="text"
+                                                      placeholder="请选择excel表"
+                                                      style="border: 1px solid #e6e6e6; height: 30px;width: 250px">
+        </div>
     </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-<<<<<<< HEAD
-    <button type="button" class="btn btn-primary btn-sm"  id = "uploadBtnTest" onclick="uploadBtn()" >确定</button>
+    <button type="button" class="btn btn-primary btn-sm" id="uploadBtnTest" οnclick="uploadBtn()">确定</button>
 </div>
 
 </div>
-=======
-    <button type="button" class="btn btn-primary btn-sm"  id = "uploadBtnTest" οnclick="uploadBtn()" >确定</button>
-</div>
-
-    </div>
->>>>>>> bf572048b947a98883064228679e7352fa7c37b2
 
 </body>
 
@@ -66,17 +59,20 @@
                 data : data,
                 success : function(result) {
                     alert( result);
+                    $("#excel-modal").modal('hide');
+
                 },
                 error : function() {
-                    alert( "excel上传失败");
+                    alert("excel上传失败");
+
+
                 },
-                cache : false,
-                contentType : false,
-                processData : false
+                cache: false,
+                contentType: false,
+                processData: false
             });
         };
     };
-
     $("#uploadBtnTest").click(function () {
         var uploadEventFile = $("#uploadEventFile").val();
         if(uploadEventFile === ''){

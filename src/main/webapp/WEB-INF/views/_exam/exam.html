@@ -127,7 +127,8 @@
 </div>
 
 <div>
-	<a id="testpaperBt" class="link link--highlighted btn btn-success btn-lg" href="#modal" style="opacity:0.8; position: fixed; right: 0; bottom: 0; margin-right: 10px; margin-bottom: 10px">提交试卷</a>
+	<a id="testpaperBt" class="link link--highlighted btn btn-success btn-lg" href="#modal" style="opacity:0.8; position: fixed; left: 0; bottom: 0; margin-left: 0px; margin-bottom: 10px">提交试卷</a>
+
 	<!-- <button id="testpaper" class="btn btn-success btn-lg">提交试卷</button> -->
 </div>
 
@@ -184,7 +185,7 @@
 					$("#mmm").remove();
 					data.forEach(function(e) {
 						if(e.ifCorrect) {
-							score+=10;
+							score+=4;
 						}
 						$("#score").text(score);
 						inst.open();
@@ -251,6 +252,14 @@
 		}
 
 	},1000*60);
+</script>
+<button class="link link--highlighted btn btn-success btn-lg" id="newback"  href="#modal" style="opacity:0.8; position: fixed; right: 0; bottom: 0; margin-right: 10px; margin-bottom: 10px">返回</button>
+<script>
+	var backUri = document.referrer;
+	$('#back').attr("href",backUri);
+	$('#newback').click(function(){
+		window.location.href=backUri;
+	})
 </script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <#import "/_admin/lib/sidbar_templet.html" as sidbarTemplet>
+<!DOCTYPE html>
 <html lang="zh-cn">
 
 <head>
@@ -52,11 +53,7 @@
 			<div class="panel-heading">
 				<h2 class="panel-title pull-left" style="line-height: 39px;">题库</h2>
 				<button class="pull-right btn btn-primary" data-toggle="modal" v-on:click="add()">新增题</button>
-<<<<<<< HEAD
-				<button class="pull-right btn btn-primary" data-toggle="modal" onclick=" Importexcel()" >导入</button>
-=======
 				<button class="pull-right btn btn-primary" data-toggle="modal" onclick="Importexcel()" >导入</button>
->>>>>>> bf572048b947a98883064228679e7352fa7c37b2
 				<!--<form name="user" action="/admin/excel_go" method="get">
 					<input type="submit" value="导入" />
 				</form>-->
@@ -104,33 +101,32 @@
 					<div class="modal-header bg-primary">
 						<button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">&times;</button>
-						<h4 class="modal-title" v-if="btnState == 0">新增题</h4>
-						<h4 class="modal-title" v-if="btnState == 1">修改题</h4>
-					</div>
-
-
-
-
-					<!--添加题-->
-					<div class="modal-body">
-						<form class="form-horizontal" id="optionsForm" action="/admin/addquestionbank" method="post" onsubmit="return mySubmit(true)">
-							<div class="form-group">
-								<label for="firstname" class="col-xs-2 control-label">题干：</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="stem" v-model="QuestionBank.stem" placeholder="请输入名字">
+							<h4 class="modal-title" v-if="btnState == 0">新增题</h4>
+							<h4 class="modal-title" v-if="btnState == 1">修改题</h4>
+						</div>
+						<!--添加题-->
+						<div class="modal-body">
+							<form class="form-horizontal" id="optionsForm" action="/admin/addquestionbank" method="post" onsubmit="return mySubmit(true)">
+								<div class="form-group">
+									<label for="firstname" class="col-xs-2 control-label">题干：</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="stem" v-model="QuestionBank.stem" placeholder="请输入名字">
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label for="lastname" class="col-sm-2 control-label">类型：</label>
-								<div class="col-sm-5">
-									<input id="op-show" v-on:click="show()" type="radio" value="1" v-model="QuestionBank.testsType">
-									<label for="op-show" class="">选择题</label>
+								<div class="form-group">
+									<label for="lastname" class="col-sm-2 control-label">类型：</label>
+									<div class="col-sm-3">
+										<input id="op-show" v-on:click="show()" type="radio" value="1"  v-model="QuestionBank.testsType">
+										<label for="op-show" class="">选择题</label>
+									</div>
+									<div class="col-sm-3">
+										<input id="op-hide" v-on:click="hide()" type="radio" value="0"  v-model="QuestionBank.testsType">判断题&nbsp;&nbsp;
+									</div>
+									<div class="col-sm-3">
+										<input id="op-hide1" v-on:click="hide1()" type="radio" value="2"  v-model="QuestionBank.testsType">填空题&nbsp;&nbsp;
+									</div>
 								</div>
-								<div class="col-sm-5">
-									<input id="op-hide" v-on:click="hide()" type="radio" value="0" v-model="QuestionBank.testsType">判断题&nbsp;&nbsp;
-								</div>
-							</div>
-							<div id="options-views">
+								<div id="options-views">
 								<!-- 开始 -->
 								<div class="form-group">
 									<label for="lastname" class="col-sm-2 control-label">选项：</label>
@@ -165,31 +161,44 @@
 										<option value="C">C</option>
 										<option value="D">D</option>
 									</select>
-									{{QuestionBank.answer}}
+										<!--{{QuestionBank.answer}}-->
 								</div>
 							</div>
 							<div class="form-group" v-if="QuestionBank.testsType == 0">
 								<label for="firstname" class="col-xs-2 control-label">正确答案：</label>
 								<div class="col-sm-5">
 									<select class="form-control" v-model="QuestionBank.answer">
-										<option value="0">错误</option>
+										<option value="0" aria-checked="true">错误</option>
 										<option value="1">正确</option>
 									</select>
-									{{QuestionBank.answer}}
+										<!--{{QuestionBank.answer}}-->
 								</div>
 							</div>
-						</form>
-						<!--end添加题-->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">
-								关闭</button>
-							<button type="button" class="btn btn-primary" v-on:click="addQuestionBank()" v-if="btnState == 0">提交试题</button>
-							<button type="button" class="btn btn-primary" v-on:click="sbUpdate()"  v-if="btnState == 1">修改试题</button>
+								<div class="form-group" v-if="QuestionBank.testsType == 2">
+									<label for="firstname" class="col-xs-2 control-label">正确答案：</label>
+									<div class="col-sm-5">
+
+										<input type="text" class="form-control" name="stem" v-model="QuestionBank.answer" placeholder="请输入答案">
+
+										<!--<select class="form-control" v-model="QuestionBank.answer">
+											<option value="0">错误</option>
+											<option value="1">正确</option>
+										</select>-->
+										<!--{{QuestionBank.answer}}-->
+									</div>
+								</div>
+							</form>
+							<!--end添加题-->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">
+									关闭</button>
+								<button type="button" class="btn btn-primary" v-on:click="addQuestionBank()" v-if="btnState == 0">提交试题</button>
+								<button type="button" class="btn btn-primary" v-on:click="sbUpdate()"  v-if="btnState == 1">修改试题</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
 	</div>
 	<!--content-->
@@ -203,12 +212,6 @@
 
 	</div>
 </div>
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> bf572048b947a98883064228679e7352fa7c37b2
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -273,6 +276,13 @@
 					if(this.QuestionBank.answer != 1 || this.QuestionBank.answer!= 0) {
 						this.QuestionBank.answer = 1;
 						this.QuestionBank.testsType = 0;
+					}
+					$("#options-views").hide();
+				},
+				hide1: function() {
+					if(this.QuestionBank.answer != ""  || this.QuestionBank.answer!= null) {
+						this.QuestionBank.answer = null;
+						this.QuestionBank.testsType = 2;
 					}
 					$("#options-views").hide();
 				},

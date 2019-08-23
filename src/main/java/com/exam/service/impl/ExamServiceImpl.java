@@ -83,6 +83,7 @@ public class ExamServiceImpl implements ExamService {
 		modelAndView.addObject("JudgmentQuestion", findAllJudgmentQuestion);
 		modelAndView.addObject("ChoiceQuestion", findAllChoiceQuestion);
 		modelAndView.addObject("findAllFillsBlanksQuestion", findAllFillsBlanksQuestion);
+		modelAndView.addObject("users", users.getUserName());
 		modelAndView.setViewName("_exam/exam");
 	}
 
@@ -96,7 +97,7 @@ public class ExamServiceImpl implements ExamService {
 			if (questionBankVo.getAnswer() != null) {
 				if (session.getAttribute(questionBankVo.getQuestionBankId().toString())
 						.equals(questionBankVo.getAnswer())) {
-					fraction = fraction + 10;
+					fraction = fraction + 4;
 					questionBankVo.setIfCorrect(true);
 				} else {
 					questionBankVo.setIfCorrect(false);

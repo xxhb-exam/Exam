@@ -51,8 +51,9 @@
 
 	}
 </style>
-<body id="back">
-
+<body id="back" onload="show()">
+<span style="font-size: 50px">答题人:${users}</span>
+<span id="name-sorce" style="font-size: 50px; margin-left: 30px; display: none;">成绩:</span>
 <section class="quanju black" >
 	<!--header-->
 	<section class="header">
@@ -163,6 +164,10 @@
 <script type="text/javascript" src="/static/js/common.js"></script>
 
 <script>
+    function show(){
+        alert("考试开始，共五道填空，五道判断，十五道选择，时间六十分钟！！");
+        return;
+    }
 	$(document).ready(function(){
 		$('input').iCheck({
 			checkboxClass: 'icheckbox_square',
@@ -181,6 +186,7 @@
 	function submitPapers(arr) {
 		ajaxSubmitJSON("/exam/submitpapers", JSON.stringify(arr),
 				function(data) {
+
 					var score = 0;
 					$("#mmm").remove();
 					data.forEach(function(e) {
@@ -203,42 +209,64 @@
 							$(".danger-"+e.questionBankId+" span").text(e.answer);
 						}
 					})
-
+                    $('#name-sorce').show();
+					$("#name-sorce").html('成绩:'+ score);
 				},
 				function(data) {
 					alert("错误");
 				}
 		);
 	}
-
 	var arr = [];
+function subPaper(){
+<#list JudgmentQuestion as item>
+    var item${item.questionBankId} = $('input[name="${item.questionBankId}"]:checked ');
+    arr.push({
+        'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
+        'answer': item${item.questionBankId}.val()
+});
+</#list>
+    <#list ChoiceQuestion as item>
+    var item${item.questionBankId} = $('input[name="${item.questionBankId}"]:checked ');
+    arr.push({
+        'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
+        'answer': item${item.questionBankId}.val()
+});
+</#list>
+    <#list findAllFillsBlanksQuestion as item>
+    var item${item.questionBankId} = $('input[name="${item.questionBankId}"] ');
+    arr.push({
+        'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
+        'answer': item${item.questionBankId}.val()
+});
+</#list>
+}
+
 	$("#testpaper").on("click", function(){
-	<#list JudgmentQuestion as item>
-		var item${item.questionBankId} = $('input[name="${item.questionBankId}"]:checked ');
-		arr.push({
-			'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
-			'answer': item${item.questionBankId}.val()
-	});
-	</#list>
-		<#list ChoiceQuestion as item>
-		var item${item.questionBankId} = $('input[name="${item.questionBankId}"]:checked ');
-		arr.push({
-			'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
-			'answer': item${item.questionBankId}.val()
-	});
-	</#list>
-		<#list findAllFillsBlanksQuestion as item>
-		var item${item.questionBankId} = $('input[name="${item.questionBankId}"] ');
-		arr.push({
-			'questionBankId': $('input[name="${item.questionBankId}"]').attr('name'),
-			'answer': item${item.questionBankId}.val()
-	});
-	</#list>
-		console.log(arr);
-		console.log(JSON.stringify({"list":arr}));
-		$("#testpaperBt").remove();
-		submitPapers(arr);
-		clearInterval(timeSetInterval);
+	    subPaper();
+	    var count = 0;
+	    for (i = 0; i < arr.length; i++) {
+	        if(arr[i].answer == null){
+	            count++;
+            }
+        }
+	    if(count!=0){
+	       var r =  confirm("试卷还未答完，是否要提交试卷？")
+            if(r==true){
+                $("#testpaperBt").remove();
+                submitPapers(arr);
+                clearInterval(timeSetInterval);
+                $('#newback').show();
+                return;
+            }
+        }else {
+            console.log(arr);
+            console.log(JSON.stringify({"list":arr}));
+            $("#testpaperBt").remove();
+            submitPapers(arr);
+            clearInterval(timeSetInterval);
+        }
+
 	});
 
 	var timeSetInterval = setInterval(function() {
@@ -247,15 +275,17 @@
 		$("#time").text(time);
 		if(time==0) {
 			$("#testpaperBt").remove();
+			subPaper();
 			submitPapers(arr);
 			clearInterval(timeSetInterval);
 		}
 
 	},1000*60);
 </script>
-<button class="link link--highlighted btn btn-success btn-lg" id="newback"  href="#modal" style="opacity:0.8; position: fixed; right: 0; bottom: 0; margin-right: 10px; margin-bottom: 10px">返回</button>
+<button class="link link--highlighted btn btn-success btn-lg" id="newback"  href="#modal" style="opacity:0.8; position: fixed; right: 0; bottom: 0; margin-right: 10px; margin-bottom: 10px;display: none;">返回</button>
 <script>
 	var backUri = document.referrer;
+
 	$('#back').attr("href",backUri);
 	$('#newback').click(function(){
 		window.location.href=backUri;

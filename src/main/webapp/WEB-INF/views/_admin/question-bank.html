@@ -354,7 +354,7 @@
 					);
 				},
 				page: function(pageNum) {
-					ajaxSubmitJSON("/admin/getAllQuestionBank", JSON.stringify({'pageNum':pageNum}),
+					ajaxSubmitJSON("/admin/getAllQuestionBank", JSON.stringify({"pageNum":pageNum}),
 							function(data) {
 								vm.QuestionBankVoList = data;
 							},

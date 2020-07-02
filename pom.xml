@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.38</version>
+			<version>8.0.16</version>
 		</dependency>
 
 		<!-- Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监控和扩展功能。 -->
